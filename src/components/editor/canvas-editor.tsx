@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Case } from "@/lib/api";
 import { fabric } from "fabric";
 import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Redo, Save, Type, Undo } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AIFeedback } from "./ai-feedback";
 
@@ -18,6 +18,27 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const editorRef = useRef<fabric.Canvas | null>(null);
   const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(null);
+  
+  const addDefaultText = useCallback((canvas: fabric.Canvas) => {
+    let defaultText = 'Click to edit this text. This is a sample appeal draft.';
+    
+    // Use case context to provide more relevant placeholder text if available
+    if (caseData) {
+      defaultText = `${documentTitle || 'Draft Document'} for case: ${caseData.title}\n\nClient: ${caseData.client_name}\nCase Number: ${caseData.case_number}\n\nClick to edit this text and start drafting your appeal.`;
+    }
+    
+    const text = new fabric.Textbox(defaultText, {
+      left: 50,
+      top: 50,
+      width: 700,
+      fontSize: 18,
+      fontFamily: 'Arial',
+      fill: '#333333',
+    });
+    
+    canvas.add(text);
+    canvas.renderAll();
+  }, [caseData, documentTitle]);
   
   useEffect(() => {
     if (canvasRef.current && !editorRef.current) {
@@ -61,32 +82,11 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
         editorRef.current = null;
       };
     }
-  }, []);
+  }, [addDefaultText]);
   
   const handleSelection = () => {
     const selected = editorRef.current?.getActiveObject();
     setSelectedObject(selected || null);
-  };
-  
-  const addDefaultText = (canvas: fabric.Canvas) => {
-    let defaultText = 'Click to edit this text. This is a sample appeal draft.';
-    
-    // Use case context to provide more relevant placeholder text if available
-    if (caseData) {
-      defaultText = `${documentTitle || 'Draft Document'} for case: ${caseData.title}\n\nClient: ${caseData.client_name}\nCase Number: ${caseData.case_number}\n\nClick to edit this text and start drafting your appeal.`;
-    }
-    
-    const text = new fabric.Textbox(defaultText, {
-      left: 50,
-      top: 50,
-      width: 700,
-      fontSize: 18,
-      fontFamily: 'Arial',
-      fill: '#333333',
-    });
-    
-    canvas.add(text);
-    canvas.renderAll();
   };
   
   const addNewTextbox = () => {

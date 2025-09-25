@@ -59,7 +59,7 @@ export default function EditorPage() {
                     <CardTitle className="text-xl">AI Suggestions</CardTitle>
                   </div>
                   <CardDescription className="text-gray-500 mt-1.5">
-                    Select text on the canvas and click "Send to AI" to get feedback
+                    Select text on the canvas and click &quot;Send to AI&quot; to get feedback
                   </CardDescription>
                 </CardHeader>
                 <Separator />
