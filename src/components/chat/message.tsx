@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { format } from "date-fns";
 
 export interface Message {
   id: string;
@@ -15,31 +16,32 @@ interface ChatMessageProps {
 
 export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === "user";
+  const formattedTime = format(new Date(message.timestamp), 'h:mm a');
   
   return (
-    <div className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"}`}>
+    <div className={`flex gap-3 mb-6 ${isUser ? "justify-end" : "justify-start"}`}>
       {!isUser && (
-        <Avatar>
+        <Avatar className="h-10 w-10 border-2 border-white shadow-sm">
           <AvatarImage src="/bot-avatar.png" />
-          <AvatarFallback>AI</AvatarFallback>
+          <AvatarFallback className="bg-primary/90 text-white font-medium">AI</AvatarFallback>
         </Avatar>
       )}
       
-      <div className={`rounded-lg px-4 py-2 max-w-[80%] ${
+      <div className={`rounded-2xl px-5 py-3.5 max-w-[85%] shadow-sm ${
         isUser 
-          ? "bg-primary text-primary-foreground" 
-          : "bg-muted"
+          ? "bg-primary text-primary-foreground rounded-tr-sm" 
+          : "bg-white border border-gray-100 rounded-tl-sm"
       }`}>
-        <p className="text-sm">{message.content}</p>
-        <div className={`text-xs mt-1 ${isUser ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
-          {new Date(message.timestamp).toLocaleTimeString()}
+        <p className="text-base leading-relaxed">{message.content}</p>
+        <div className={`text-xs mt-2 flex justify-end ${isUser ? "text-primary-foreground/80" : "text-gray-500"}`}>
+          {formattedTime}
         </div>
       </div>
       
       {isUser && (
-        <Avatar>
+        <Avatar className="h-10 w-10 border-2 border-white shadow-sm">
           <AvatarImage src="/user-avatar.png" />
-          <AvatarFallback>UN</AvatarFallback>
+          <AvatarFallback className="bg-gray-800 text-white font-medium">UN</AvatarFallback>
         </Avatar>
       )}
     </div>

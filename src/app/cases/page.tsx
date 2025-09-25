@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { apiService, Case } from "@/lib/api";
-import { Filter, Search } from "lucide-react";
+import { Briefcase, Filter, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -86,30 +86,37 @@ export default function CasesPage() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       
-      <main className="flex-1 container py-6">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-3xl font-bold">Cases</h1>
-            <p className="text-gray-500">Manage and access your legal cases</p>
+      <main className="flex-1 page-container">
+        <div className="page-header flex justify-between items-center">
+          <div className="flex items-center">
+            <div className="bg-primary/10 p-3 rounded-lg mr-4">
+              <Briefcase className="h-7 w-7 text-primary" />
+            </div>
+            <div>
+              <h1 className="page-title">Cases</h1>
+              <p className="page-description">Manage and access your legal cases</p>
+            </div>
           </div>
           <NewCaseDialog />
         </div>
         
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 my-8">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-gray-500" />
             <Input
               placeholder="Search cases..."
-              className="pl-9"
+              className="pl-10 py-6 text-base"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px]">
-              <Filter className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="Filter by status" />
+            <SelectTrigger className="w-full md:w-[200px] py-6">
+              <div className="flex items-center">
+                <Filter className="h-4 w-4 mr-2 flex-shrink-0" />
+                <SelectValue placeholder="Filter by status" />
+              </div>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Cases</SelectItem>
@@ -120,19 +127,19 @@ export default function CasesPage() {
           </Select>
         </div>
         
-        <div className="space-y-4">
+        <div className="space-y-5">
           {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <p>Loading cases...</p>
+            <div className="flex items-center justify-center py-20 bg-gray-50 rounded-lg shadow-sm">
+              <p className="text-gray-500">Loading cases...</p>
             </div>
           ) : filteredCases.length > 0 ? (
             filteredCases.map(caseItem => (
               <CaseListItem key={caseItem.id} caseItem={caseItem} />
             ))
           ) : (
-            <div className="text-center py-12 bg-gray-50 rounded-lg">
-              <p className="text-gray-500">No cases found matching your criteria</p>
-              <Button variant="link" onClick={() => { setSearchTerm(""); setStatusFilter("all"); }}>
+            <div className="text-center py-20 bg-gray-50 rounded-lg shadow-sm">
+              <p className="text-gray-500 mb-4">No cases found matching your criteria</p>
+              <Button variant="outline" onClick={() => { setSearchTerm(""); setStatusFilter("all"); }}>
                 Clear filters
               </Button>
             </div>

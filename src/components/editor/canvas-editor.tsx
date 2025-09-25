@@ -181,15 +181,16 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
 
   return (
     <div className="flex flex-col w-full">
-      <div className="bg-white border rounded-t-md p-2 flex flex-wrap gap-2 items-center">
-        <Button variant="outline" size="sm" onClick={addNewTextbox}>
-          <Type className="h-4 w-4 mr-1" />
+      <div className="bg-white border border-gray-200 rounded-t-lg py-3 px-4 flex flex-wrap gap-3 items-center shadow-sm">
+        <Button variant="outline" className="py-2.5 px-4" size="sm" onClick={addNewTextbox}>
+          <Type className="h-4 w-4 mr-2" />
           Add Text
         </Button>
-        <div className="h-6 border-r mx-1"></div>
+        <div className="h-6 border-r border-gray-200 mx-2"></div>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9" 
           onClick={() => formatText('bold')} 
           disabled={!selectedObject}
         >
@@ -197,16 +198,18 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
         </Button>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9"  
           onClick={() => formatText('italic')} 
           disabled={!selectedObject}
         >
           <Italic className="h-4 w-4" />
         </Button>
-        <div className="h-6 border-r mx-1"></div>
+        <div className="h-6 border-r border-gray-200 mx-2"></div>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9" 
           onClick={() => formatText('align-left')} 
           disabled={!selectedObject}
         >
@@ -214,7 +217,8 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
         </Button>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9"  
           onClick={() => formatText('align-center')} 
           disabled={!selectedObject}
         >
@@ -222,16 +226,18 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
         </Button>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9" 
           onClick={() => formatText('align-right')} 
           disabled={!selectedObject}
         >
           <AlignRight className="h-4 w-4" />
         </Button>
-        <div className="h-6 border-r mx-1"></div>
+        <div className="h-6 border-r border-gray-200 mx-2"></div>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9" 
           disabled={!editorRef.current}
           onClick={() => {
             if (editorRef.current && typeof editorRef.current.undo === 'function') {
@@ -243,7 +249,8 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
         </Button>
         <Button 
           variant="ghost" 
-          size="icon" 
+          size="icon"
+          className="h-9 w-9" 
           disabled={!editorRef.current}
           onClick={() => {
             if (editorRef.current && typeof editorRef.current.redo === 'function') {
@@ -257,18 +264,19 @@ export default function CanvasEditor({ caseData, documentId, documentTitle }: Ca
         <Button 
           variant="default" 
           size="sm"
+          className="py-2.5 px-4"
           onClick={saveCanvas}
         >
-          <Save className="h-4 w-4 mr-1" />
+          <Save className="h-4 w-4 mr-2" />
           Save
         </Button>
       </div>
       
-      <div className="border bg-gray-50 p-5 flex justify-center min-h-[600px]">
-        <canvas ref={canvasRef} />
+      <div className="border border-gray-200 bg-gray-50 p-6 flex justify-center min-h-[600px] shadow-inner">
+        <canvas ref={canvasRef} className="rounded shadow-sm" />
       </div>
       
-      <div className="mt-4 border p-4 rounded-md bg-white">
+      <div className="mt-6 p-6 rounded-lg border border-gray-200 bg-white shadow-sm">
         <AIFeedback 
           selectedText={getSelectedText()} 
           onApplyFeedback={applyAIFeedback} 

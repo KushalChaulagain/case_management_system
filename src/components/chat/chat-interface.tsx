@@ -116,8 +116,8 @@ export function ChatInterface({ caseData }: ChatInterfaceProps = {}) {
   };
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader className="px-4">
+    <Card className="flex flex-col h-full shadow-sm border-gray-200">
+      <CardHeader className="px-6 py-5 border-b">
         <CardTitle>
           {caseData 
             ? `AI Assistant - ${caseData.title}`
@@ -126,7 +126,7 @@ export function ChatInterface({ caseData }: ChatInterfaceProps = {}) {
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="flex-grow overflow-auto px-4 pt-0 pb-4">
+      <CardContent className="flex-grow overflow-auto px-6 pt-6 pb-4">
         <div className="space-y-4">
           {messages.map((message) => (
             <ChatMessage key={message.id} message={message} />
@@ -135,16 +135,16 @@ export function ChatInterface({ caseData }: ChatInterfaceProps = {}) {
         </div>
       </CardContent>
       
-      <CardFooter className="px-4 py-3 border-t">
+      <CardFooter className="px-6 py-4 border-t bg-gray-50">
         <form onSubmit={handleSubmit} className="flex w-full gap-2">
           <Input
             placeholder="Type your message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
-            className="flex-grow"
+            className="flex-grow py-6 px-4 text-base focus-visible:ring-primary"
           />
-          <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+          <Button type="submit" size="icon" className="h-12 w-12" disabled={isLoading || !input.trim()}>
             <Send className="h-4 w-4" />
           </Button>
         </form>

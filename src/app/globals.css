@@ -119,4 +119,21 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Page layout containers */
+  .page-container {
+    @apply container px-4 py-8 md:px-6 md:py-10 lg:px-8 mx-auto;
+  }
+  
+  .page-header {
+    @apply mb-6;
+  }
+  
+  .page-title {
+    @apply text-2xl font-bold tracking-tight;
+  }
+  
+  .page-description {
+    @apply text-muted-foreground;
+  }
 }
